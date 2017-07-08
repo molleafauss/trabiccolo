@@ -1,9 +1,9 @@
 package net.molleafauss.cf.trabiccolo.consumer.service;
 
-import net.molleafauss.cf.trabiccolo.consumer.exception.InvalidTradeMessageException;
-import net.molleafauss.cf.trabiccolo.consumer.model.TradeMessage;
 import net.molleafauss.cf.trabiccolo.common.SupportedCountryService;
 import net.molleafauss.cf.trabiccolo.common.SupportedCurrencyService;
+import net.molleafauss.cf.trabiccolo.consumer.exception.InvalidTradeMessageException;
+import net.molleafauss.cf.trabiccolo.consumer.model.TradeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

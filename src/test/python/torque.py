@@ -16,7 +16,7 @@ CURRENCIES = ["EUR", "USD", "GBP", "JPY"]
 def parse_args():
     p = argparse.ArgumentParser()
     p.add_argument("--endpoint", default="http://localhost:8080/message",
-                   help="Enpoint to call. Default to http://localhost:8080/message")
+                   help="Endpoint to call. Default to http://localhost:8080/message")
     p.add_argument("--sleep", type=int, default=500,
                    help="Sleep time in ms between messages sent. Defaults to 500ms")
     p.add_argument("--threads", type=int, default=1,

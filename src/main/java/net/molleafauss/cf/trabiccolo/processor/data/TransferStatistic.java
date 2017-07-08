@@ -8,8 +8,6 @@ public class TransferStatistic {
     @NonNull
     private final String country;
     @NonNull
-    private final String currencyFrom;
-    @NonNull
-    private final String currencyTo;
+    private final String currency;
     private final int count;
 }

@@ -1,7 +1,7 @@
 package net.molleafauss.cf.trabiccolo.processor.controller;
 
 import net.molleafauss.cf.trabiccolo.processor.data.TransferStatistic;
-import net.molleafauss.cf.trabiccolo.processor.service.StatisticService;
+import net.molleafauss.cf.trabiccolo.processor.service.OutboundCurrencyTrackerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,18 +13,17 @@ import java.util.List;
  * Returns the list of countries and currency pairs for which message were processed
  */
 @RestController
-public class ReportController {
+public class OutboundCurrencyReportController {
 
-    private final StatisticService statisticService;
+    private final OutboundCurrencyTrackerService outboundCurrencyTrackerService;
 
     @Autowired
-    public ReportController(StatisticService statisticService) {
-        this.statisticService = statisticService;
+    public OutboundCurrencyReportController(OutboundCurrencyTrackerService outboundCurrencyTrackerService) {
+        this.outboundCurrencyTrackerService = outboundCurrencyTrackerService;
     }
 
-    @RequestMapping(value = "/rest/statistic", method = RequestMethod.GET)
+    @RequestMapping(value = "/report/outbound", method = RequestMethod.GET)
     public List<TransferStatistic> listTransfers() {
-        List<TransferStatistic> result = statisticService.listAllRelevantTransfers();
-        return result;
+        return outboundCurrencyTrackerService.listAllRelevantTransfers();
     }
 }

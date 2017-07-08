@@ -1,6 +1,5 @@
 package net.molleafauss.cf.trabiccolo.processor.data;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
 
@@ -12,7 +11,5 @@ public class TransferKey {
     @NonNull
     private final String country;
     @NonNull
-    private final String currencyFrom;
-    @NonNull
-    private final String currencyTo;
+    private final String currency;
 }

@@ -9,26 +9,25 @@ import java.util.List;
 import static net.molleafauss.cf.trabiccolo.test.TestHelper.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class StatisticServiceTest {
+public class InboundCurrencyTrackerServiceTest {
 
-    private StatisticService statisticService;
+    private InboundCurrencyTrackerService inboundCurrencyTrackerService;
 
     @Before
     public void setup() {
-        statisticService = new StatisticService(testSupportedCountryService(), testSupportedCurrencyService());
+        inboundCurrencyTrackerService = new InboundCurrencyTrackerService(testSupportedCountryService(), testSupportedCurrencyService());
     }
 
     @Test
     public void processSupportedMessage() throws Exception {
-        statisticService.processMessage(buildTestMessage().build());
+        inboundCurrencyTrackerService.processMessage(buildTestMessage().build());
 
-        List<TransferStatistic> transfers = statisticService.listAllRelevantTransfers();
+        List<TransferStatistic> transfers = inboundCurrencyTrackerService.listAllRelevantTransfers();
         assertThat(transfers).isNotNull();
         assertThat(transfers.size()).isEqualTo(1);
         TransferStatistic statistic = transfers.get(0);
         assertThat(statistic.getCountry()).isEqualTo("IE");
-        assertThat(statistic.getCurrencyFrom()).isEqualTo("EUR");
-        assertThat(statistic.getCurrencyTo()).isEqualTo("GBP");
+        assertThat(statistic.getCurrency()).isEqualTo("EUR");
         assertThat(statistic.getCount()).isEqualTo(1);
     }
 }

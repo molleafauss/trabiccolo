@@ -3,7 +3,6 @@ package net.molleafauss.cf.trabiccolo.consumer.model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * Data model of the trade message received by the consumer
