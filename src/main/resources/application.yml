@@ -1,0 +1,7 @@
+---
+processor:
+  supported:
+    # list of countries supported by the consumer
+    countries: IE, IT, UK, DE, US, FR, ES, JP
+    # list of currencies supported by the consumer
+    currencies: EUR, USD, GBP, JPY

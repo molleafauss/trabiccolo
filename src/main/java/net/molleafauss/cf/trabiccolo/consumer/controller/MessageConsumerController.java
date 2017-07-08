@@ -1,0 +1,45 @@
+package net.molleafauss.cf.trabiccolo.consumer.controller;
+
+import net.molleafauss.cf.trabiccolo.consumer.exception.InvalidTradeMessageException;
+import net.molleafauss.cf.trabiccolo.consumer.model.InvalidTradeMessageResponse;
+import net.molleafauss.cf.trabiccolo.consumer.model.TradeMessage;
+import net.molleafauss.cf.trabiccolo.consumer.service.TradeMessageVerifier;
+import net.molleafauss.cf.trabiccolo.processor.MessageProcessorService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
+/**
+ * This endpoint will consume the messaged received in POST.
+ */
+@RestController
+public class MessageConsumerController {
+
+    private static Logger log = LoggerFactory.getLogger(MessageConsumerController.class);
+
+    @Autowired
+    private MessageProcessorService messageProcessorService;
+
+    @Autowired
+    private TradeMessageVerifier tradeMessageVerifier;
+
+    @RequestMapping(value = "/message", method = POST, consumes = "application/json", produces = "application/json")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public void receiveMessage(@RequestBody TradeMessage tradeMessage) throws InvalidTradeMessageException {
+
+        tradeMessageVerifier.verify(tradeMessage);
+
+        messageProcessorService.handle(tradeMessage);
+        log.debug("Message received: {}", tradeMessage);
+    }
+
+    @ExceptionHandler(InvalidTradeMessageException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public InvalidTradeMessageResponse handleInvalidMessage(InvalidTradeMessageException ex) {
+        return new InvalidTradeMessageResponse(ex.getMessage());
+    }
+}
