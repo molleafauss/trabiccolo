@@ -8,6 +8,8 @@ import time
 import random
 import json
 import threading
+import logging
+import sys
 
 COUNTRIES = ["IE", "IT", "UK", "DE", "US", "FR", "ES"]
 CURRENCIES = ["EUR", "USD", "GBP", "JPY"]
@@ -49,7 +51,7 @@ def post_messages(i, args):
         message, headers = make_message(args)
         r = urllib2.Request(args.endpoint, json.dumps(message), headers=headers)
         f = urllib2.urlopen(r)
-        print "%d, %s\n" % (i, f.getcode())
+        logging.info("%d, %s", i, f.getcode())
         time.sleep(args.sleep / 1000.0)
 
 
@@ -59,5 +61,6 @@ def run(args):
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO, stream=sys.stdout)
     args = parse_args()
     run(args)

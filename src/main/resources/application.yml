@@ -1,5 +1,8 @@
 ---
 processor:
+  graphite:
+    host: 192.168.0.15
+    port: 2003
   supported:
     # list of countries supported by the consumer
     countries: IE, IT, UK, DE, US, FR, ES, JP
