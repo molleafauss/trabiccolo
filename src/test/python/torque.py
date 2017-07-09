@@ -11,8 +11,8 @@ import threading
 import logging
 import sys
 
-COUNTRIES = ["IE", "IT", "UK", "DE", "US", "FR", "ES"]
-CURRENCIES = ["EUR", "USD", "GBP", "JPY"]
+COUNTRIES = ["IE", "IT", "UK", "DE", "US", "FR", "ES", "PT", "RU"]
+CURRENCIES = ["EUR", "USD", "GBP", "JPY", "SEK"]
 
 
 def parse_args():

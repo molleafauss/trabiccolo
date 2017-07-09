@@ -8,7 +8,11 @@ import net.molleafauss.cf.trabiccolo.consumer.service.TradeMessageVerifier;
 import net.molleafauss.cf.trabiccolo.processor.MessageProcessorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -27,7 +31,7 @@ public class MessageConsumerController {
 
     @RequestMapping(value = "/message", method = POST, consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void receiveMessage(@RequestBody TradeMessage tradeMessage) throws InvalidTradeMessageException {
+    public void receiveMessage(@Valid @RequestBody TradeMessage tradeMessage) throws InvalidTradeMessageException {
 
         tradeMessageVerifier.verify(tradeMessage);
 
@@ -39,5 +43,16 @@ public class MessageConsumerController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public InvalidTradeMessageResponse handleInvalidMessage(InvalidTradeMessageException ex) {
         return new InvalidTradeMessageResponse(ex.getMessage());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public InvalidTradeMessageResponse handleInvalidMessage(MethodArgumentNotValidException ex) {
+        return new InvalidTradeMessageResponse(InvalidTradeMessageException.MISSING_FIELDS);
+    }
+
+    @ExceptionHandler({ HttpMessageNotReadableException.class })
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public void handleInvalidMessage(Exception ex) {
     }
 }

@@ -49,13 +49,4 @@ public class MessageConsumerControllerTest {
 
         messageConsumerController.receiveMessage(message);
     }
-
-    @Test
-    public void handleInvalidMessageWillReturnInvalidMessageResponse() throws Exception {
-        InvalidTradeMessageException ex = new InvalidTradeMessageException("InvalidTradeMessage reason");
-
-        InvalidTradeMessageResponse result = messageConsumerController.handleInvalidMessage(ex);
-
-        assertThat(result.getError()).isEqualTo(ex.getMessage());
-    }
 }

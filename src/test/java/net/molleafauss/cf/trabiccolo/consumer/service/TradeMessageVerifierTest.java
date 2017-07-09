@@ -6,8 +6,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import static net.molleafauss.cf.trabiccolo.consumer.exception.InvalidTradeMessageException.UNSUPPORTED_COUNTRY;
-import static net.molleafauss.cf.trabiccolo.consumer.exception.InvalidTradeMessageException.UNSUPPORTED_CURRENCY;
+import static net.molleafauss.cf.trabiccolo.consumer.exception.InvalidTradeMessageException.*;
 import static net.molleafauss.cf.trabiccolo.test.TestHelper.*;
 
 public class TradeMessageVerifierTest {
@@ -75,4 +74,19 @@ public class TradeMessageVerifierTest {
         verifier.verify(buildTestMessage().currencyTo(null).build());
     }
 
+    @Test
+    public void messageWithWrongAmountsWillThrowException() throws Exception {
+        exception.expect(InvalidTradeMessageException.class);
+        exception.expectMessage(INVALID_AMOUNT);
+
+        verifier.verify(buildTestMessage().amountSell(1.0).build());
+    }
+
+    @Test
+    public void messageWithUnparseableDateWillThrowException() throws Exception {
+        exception.expect(InvalidTradeMessageException.class);
+        exception.expectMessage(INVALID_DATE);
+
+        verifier.verify(buildTestMessage().timePlaced("blalala").build());
+    }
 }
