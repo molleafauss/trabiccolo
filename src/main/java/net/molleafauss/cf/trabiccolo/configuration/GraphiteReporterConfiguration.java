@@ -1,4 +1,4 @@
-package net.molleafauss.cf.trabiccolo.processor.metrics;
+package net.molleafauss.cf.trabiccolo.configuration;
 
 import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.MetricRegistry;
@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  * Creates beans for the processor "module"
  */
 @Configuration
-public class GraphiteReporterService {
+public class GraphiteReporterConfiguration {
 
     @Bean
     public GraphiteReporter configureGraphiteReporter(MetricRegistry registry,

@@ -1,8 +1,8 @@
 package net.molleafauss.cf.trabiccolo.consumer.controller;
 
 import net.molleafauss.cf.trabiccolo.consumer.exception.InvalidTradeMessageException;
-import net.molleafauss.cf.trabiccolo.consumer.model.InvalidTradeMessageResponse;
 import net.molleafauss.cf.trabiccolo.consumer.model.TradeMessage;
+import net.molleafauss.cf.trabiccolo.consumer.service.ConsumerMetricsService;
 import net.molleafauss.cf.trabiccolo.consumer.service.TradeMessageVerifier;
 import net.molleafauss.cf.trabiccolo.processor.MessageProcessorService;
 import org.junit.Rule;
@@ -14,9 +14,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static net.molleafauss.cf.trabiccolo.test.TestHelper.buildTestMessage;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MessageConsumerControllerTest {
@@ -29,6 +27,9 @@ public class MessageConsumerControllerTest {
 
     @Mock
     private TradeMessageVerifier tradeMessageVerifier;
+
+    @Mock
+    private ConsumerMetricsService consumerMetricsService;
 
     @Rule
     public ExpectedException exception = ExpectedException.none();

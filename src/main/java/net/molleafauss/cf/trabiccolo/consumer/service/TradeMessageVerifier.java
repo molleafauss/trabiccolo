@@ -6,7 +6,6 @@ import net.molleafauss.cf.trabiccolo.consumer.exception.InvalidTradeMessageExcep
 import net.molleafauss.cf.trabiccolo.consumer.model.TradeMessage;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Locale;
@@ -25,7 +24,6 @@ public class TradeMessageVerifier {
 
     private DateTimeFormatter dateTimeFormatter;
 
-    @Autowired
     public TradeMessageVerifier(SupportedCountryService supportedCountryService,
                                 SupportedCurrencyService supportedCurrencyService) {
         this.supportedCountryService = supportedCountryService;

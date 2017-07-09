@@ -3,13 +3,13 @@ Simple script to exercise the endpoint. Will send random valid message with some
 Uses standard python 2.7 library, no extra sugar needed.
 """
 import argparse
-import urllib2
-import time
-import random
 import json
-import threading
 import logging
+import random
 import sys
+import threading
+import time
+import urllib2
 
 COUNTRIES = ["IE", "IT", "UK", "DE", "US", "FR", "ES", "PT", "RU"]
 CURRENCIES = ["EUR", "USD", "GBP", "JPY", "SEK"]
@@ -34,8 +34,8 @@ def make_message(args):
         "userId": "123456",
         "currencyFrom": random.choice(CURRENCIES),
         "currencyTo": random.choice(CURRENCIES),
-        "amountSell": 1000,
-        "amountBuy": 800,
+        "amountSell": 800,
+        "amountBuy": 1000,
         "rate": 0.8,
         "timePlaced": time.strftime("%d-%b-%y %H:%M:%S"),
         "originatingCountry": random.choice(COUNTRIES)
@@ -50,8 +50,11 @@ def post_messages(i, args):
     while True:
         message, headers = make_message(args)
         r = urllib2.Request(args.endpoint, json.dumps(message), headers=headers)
-        f = urllib2.urlopen(r)
-        logging.info("%d, %s", i, f.getcode())
+        try:
+            f = urllib2.urlopen(r)
+            logging.info("%d, %s", i, f.getcode())
+        except urllib2.HTTPError as ex:
+            logging.warn("%d, %s [%s]", i, ex.getcode(), ex.read())
         time.sleep(args.sleep / 1000.0)
 
 

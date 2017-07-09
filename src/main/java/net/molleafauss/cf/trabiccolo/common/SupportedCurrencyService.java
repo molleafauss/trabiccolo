@@ -1,6 +1,5 @@
 package net.molleafauss.cf.trabiccolo.common;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,6 @@ public class SupportedCurrencyService {
 
     private final Set<String> supportedCurrencySet;
 
-    @Autowired
     public SupportedCurrencyService(@Value("${processor.supported.currencies}") String supportedCurrencies) {
         if(supportedCurrencies == null || supportedCurrencies.length() == 0) {
             throw new IllegalArgumentException("Supported currencies cannot be empty.");

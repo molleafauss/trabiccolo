@@ -1,20 +1,14 @@
 package net.molleafauss.cf.trabiccolo.consumer.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.molleafauss.cf.trabiccolo.consumer.exception.InvalidTradeMessageException;
-import net.molleafauss.cf.trabiccolo.consumer.model.InvalidTradeMessageResponse;
 import net.molleafauss.cf.trabiccolo.consumer.model.TradeMessage;
+import net.molleafauss.cf.trabiccolo.consumer.service.ConsumerMetricsService;
 import net.molleafauss.cf.trabiccolo.consumer.service.TradeMessageVerifier;
 import net.molleafauss.cf.trabiccolo.processor.MessageProcessorService;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -32,9 +26,7 @@ import static net.molleafauss.cf.trabiccolo.test.TestHelper.buildTestMessage;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.contains;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -49,6 +41,8 @@ public class MessageConsumerControllerITest {
     private TradeMessageVerifier tradeMessageVerifier;
     @MockBean
     private MessageProcessorService messageProcessorService;
+    @MockBean
+    private ConsumerMetricsService consumerMetricsService;
     @Autowired
     private ObjectMapper objectMapper;
 
