@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Exposes the list of supported currencies from the config
@@ -14,17 +14,18 @@ import java.util.List;
 @Service
 public class SupportedCurrencyService {
 
-    private final List<String> supportedCurrencies;
+    private final Set<String> supportedCurrencySet;
 
     @Autowired
     public SupportedCurrencyService(@Value("${processor.supported.currencies}") String supportedCurrencies) {
         if(supportedCurrencies == null || supportedCurrencies.length() == 0) {
             throw new IllegalArgumentException("Supported currencies cannot be empty.");
         }
-        this.supportedCurrencies = Arrays.asList(supportedCurrencies.split(",\\s?"));
+        this.supportedCurrencySet = new HashSet<>();
+        this.supportedCurrencySet.addAll(Arrays.asList(supportedCurrencies.split(",\\s?")));
     }
 
-    public Iterator<String> enumCurrencies() {
-        return supportedCurrencies.iterator();
+    public boolean supports(String currency) {
+        return supportedCurrencySet.contains(currency);
     }
 }

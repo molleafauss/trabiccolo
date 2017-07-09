@@ -7,9 +7,6 @@ import net.molleafauss.cf.trabiccolo.consumer.model.TradeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import static net.molleafauss.cf.trabiccolo.consumer.exception.InvalidTradeMessageException.UNSUPPORTED_COUNTRY;
 import static net.molleafauss.cf.trabiccolo.consumer.exception.InvalidTradeMessageException.UNSUPPORTED_CURRENCY;
 
@@ -20,16 +17,14 @@ import static net.molleafauss.cf.trabiccolo.consumer.exception.InvalidTradeMessa
 @Component
 public class TradeMessageVerifier {
 
-    private final Set<String> supportedCurrencies;
-    private final Set<String> supportedCountries;
+    private final SupportedCountryService supportedCountryService;
+    private final SupportedCurrencyService supportedCurrencyService;
 
     @Autowired
     public TradeMessageVerifier(SupportedCountryService supportedCountryService,
                                 SupportedCurrencyService supportedCurrencyService) {
-        this.supportedCurrencies = new HashSet<>();
-        supportedCurrencyService.enumCurrencies().forEachRemaining(supportedCurrencies::add);
-        this.supportedCountries = new HashSet<>();
-        supportedCountryService.enumCountries().forEachRemaining(supportedCountries::add);
+        this.supportedCountryService = supportedCountryService;
+        this.supportedCurrencyService = supportedCurrencyService;
     }
 
     public void verify(TradeMessage tradeMessage)
@@ -40,13 +35,13 @@ public class TradeMessageVerifier {
     }
 
     private void verifyCountry(String country) throws InvalidTradeMessageException {
-        if(!supportedCountries.contains(country)) {
+        if(!supportedCountryService.supports(country)) {
             throw new InvalidTradeMessageException(UNSUPPORTED_COUNTRY);
         }
     }
 
     private void verifyCurrency(String currency) throws InvalidTradeMessageException {
-        if(!supportedCurrencies.contains(currency)) {
+        if(!supportedCurrencyService.supports(currency)) {
             throw new InvalidTradeMessageException(UNSUPPORTED_CURRENCY);
         }
     }

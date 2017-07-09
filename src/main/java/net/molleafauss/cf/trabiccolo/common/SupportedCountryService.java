@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Exposes the list of supported countries from the config
@@ -14,17 +14,18 @@ import java.util.List;
 @Service
 public class SupportedCountryService {
 
-    private final List<String> supportedCountries;
+    private final Set<String> supportedCountrySet;
 
     @Autowired
     public SupportedCountryService(@Value("${processor.supported.countries}") String supportedCountries) {
         if(supportedCountries == null || supportedCountries.length() == 0) {
             throw new IllegalArgumentException("Supported Countries cannot be empty.");
         }
-        this.supportedCountries = Arrays.asList(supportedCountries.split(",\\s?"));
+        this.supportedCountrySet = new HashSet<>();
+        this.supportedCountrySet.addAll(Arrays.asList(supportedCountries.split(",\\s?")));
     }
 
-    public Iterator<String> enumCountries() {
-        return supportedCountries.iterator();
+    public boolean supports(String country) {
+        return supportedCountrySet.contains(country);
     }
 }
