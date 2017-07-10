@@ -23,9 +23,10 @@ def parse_args():
                    help="Sleep time in ms between messages sent. Defaults to 500ms")
     p.add_argument("--threads", type=int, default=1,
                    help="Can be used to specify to start multiple threads")
-    p.add_argument("--broken-chance", type=int, default=10000,
-                   help="""Chance to have a broken message (i.e. invalid). Defaults 1 in X where X the value of this parameter. 
-                   Lower parameter means more frequent broken messages.""")
+    p.add_argument("--broken-chance", type=int, default=0,
+                   help="""Chance to have a broken message (i.e. invalid). If provided, this parameter will create a broken
+                   (i.e. unparseable) message approximately 1 in every X message where X is the value of this parameter.
+                   Lower values means more frequent broken messages. Default 0, meaning disabled.""")
     return p.parse_args()
 
 
@@ -34,7 +35,7 @@ def make_message(args):
         "Content-Type": "application/json"
     }
     # check broken chance
-    if random.randint(0, args.broken_chance) == 0:
+    if args.broken_chance and random.randint(0, args.broken_chance) == 0:
         return ("message", headers)
     message = {
         "userId": "123456",
