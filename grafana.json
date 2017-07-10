@@ -7,7 +7,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "hideControls": false,
-  "id": 2,
+  "id": 1,
   "links": [ ],
   "refresh": "5s",
   "rows": [
@@ -59,7 +59,7 @@
           "thresholds": [ ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Consumer statistics",
+          "title": "Message received (per second)",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -133,7 +133,7 @@
           "thresholds": [ ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Processor: breakdown of messages per originating country",
+          "title": "Processor: breakdown of messages per originating country (per second)",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -218,7 +218,7 @@
           "thresholds": [ ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Processor: messages by currencyFrom",
+          "title": "Processor: messages by currencyFrom (per second)",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -291,7 +291,7 @@
           "thresholds": [ ],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Processor: messages by currencyTo",
+          "title": "Processor: messages by currencyTo (per second)",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -340,7 +340,7 @@
     "list": [ ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
@@ -370,6 +370,6 @@
   },
   "timezone": "",
   "title": "Trabiccolo",
-  "version": 3
+  "version": 4
 
 }
